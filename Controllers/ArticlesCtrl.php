@@ -104,11 +104,8 @@ use Blog\Entities\Article;
             $intArticleId = 2;
 
             // Création des variables d'affichage
-            $this->_arrData['strTitle'] 	= "Blog - Détail d'un article";
-            $this->_arrData['strH1'] 		= "Article";
             $this->_arrData['strMetaDesc'] 	= "Découvrez qui nous sommes : notre équipe passionnée de développement web, notre mission et nos valeurs. Formations et expertise en programmation.";
-            $this->_arrData['strDesc']		= "Découvrez notre histoire, notre équipe et notre passion pour le développement web";
-
+            
             // Variable technique
             $this->_arrData['strPage']		= "show_article";
 
@@ -116,7 +113,14 @@ use Blog\Entities\Article;
             $objArticleModel    = new ArticleModel();
             $arrArticle = $objArticleModel->findById($intArticleId);
 
-            var_dump($arrArticle);
+            $objArticle = new Article();
+            $objArticle->hydrate($arrArticle);
+
+            $this->_arrData['strTitle'] 	= "Blog - " . $objArticle->getTitle();
+            $this->_arrData['strH1'] 		= $objArticle->getTitle();
+            $this->_arrData['strDesc']		= "Ecrit par : " . $objArticle->getCreator_name();
+
+            $this->_arrData['objArticle']   = $objArticle;
 
             $this->_display("show_article");
         }

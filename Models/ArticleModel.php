@@ -71,7 +71,11 @@ class ArticleModel extends MotherModel
      */
     public function findById(int $id): array|bool
     {
-        $strQuery = "SELECT * FROM articles WHERE article_id = :id";
+        $strQuery = "SELECT articles.*, 
+            CONCAT(users.user_name, ' ', users.user_firstname) AS article_creator_name
+            FROM articles 
+            INNER JOIN users ON article_creator = user_id
+            WHERE article_id = :id";
 
         $rqPrepare	= $this->_db->prepare($strQuery);
         $rqPrepare->bindValue(":id", $id, PDO::PARAM_INT);

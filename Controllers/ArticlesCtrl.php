@@ -101,6 +101,8 @@ use Blog\Entities\Article;
 
         public function show() 
         {
+            $intArticleId = 2;
+
             // Création des variables d'affichage
             $this->_arrData['strTitle'] 	= "Blog - Détail d'un article";
             $this->_arrData['strH1'] 		= "Article";
@@ -109,6 +111,12 @@ use Blog\Entities\Article;
 
             // Variable technique
             $this->_arrData['strPage']		= "show_article";
+
+            // Rechercher toutes les informations de l'article dont l'ID = $intArticleId
+            $objArticleModel    = new ArticleModel();
+            $arrArticle = $objArticleModel->findById($intArticleId);
+
+            var_dump($arrArticle);
 
             $this->_display("show_article");
         }

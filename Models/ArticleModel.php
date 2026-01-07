@@ -2,6 +2,8 @@
 
 namespace Blog\Models;
 
+use PDO;
+
 /**
  * Modèle des articles
  */
@@ -65,10 +67,16 @@ class ArticleModel extends MotherModel
     /**
      * Recherche un article par son ID
      * @param int $id Identifiant unique de l'article
-     * @return ??
+     * @return array|bool Tableau des valeurs de l'article ou false
      */
-    public function find(int $id)
+    public function findById(int $id): array|bool
     {
+        $strQuery = "SELECT * FROM articles WHERE article_id = :id";
+
+        $rqPrepare	= $this->_db->prepare($strQuery);
+        $rqPrepare->bindValue(":id", $id, PDO::PARAM_INT);
         
+        $rqPrepare->execute();
+        return $rqPrepare->fetch();
     }
 }

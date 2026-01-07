@@ -101,7 +101,7 @@ use Blog\Entities\Article;
 
         public function show() 
         {
-            $intArticleId = 2;
+            $intArticleId = $_GET['id'];
 
             // Création des variables d'affichage
             $this->_arrData['strMetaDesc'] 	= "Découvrez qui nous sommes : notre équipe passionnée de développement web, notre mission et nos valeurs. Formations et expertise en programmation.";
@@ -112,6 +112,10 @@ use Blog\Entities\Article;
             // Rechercher toutes les informations de l'article dont l'ID = $intArticleId
             $objArticleModel    = new ArticleModel();
             $arrArticle = $objArticleModel->findById($intArticleId);
+
+            if (!$arrArticle) {
+                $this->_notFound();
+            }
 
             $objArticle = new Article();
             $objArticle->hydrate($arrArticle);

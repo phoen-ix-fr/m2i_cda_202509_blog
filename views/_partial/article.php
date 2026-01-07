@@ -9,7 +9,7 @@
 				<span aria-label="Auteur"> - <?php echo $objArticle->getCreator_name(); ?></span>
 			</div>
 			<p class="mb-auto"><?php echo $objArticle->getSummary(); ?></p>
-			<a href="article-javascript.html" class="icon-link gap-1 icon-link-hover stretched-link" aria-label="<?php echo $objArticle->getTitle(); ?>">
+			<a href="index.php?ctrl=articles&action=show&id=<?php echo $objArticle->getId(); ?>" class="icon-link gap-1 icon-link-hover stretched-link" aria-label="<?php echo $objArticle->getTitle(); ?>">
 				Lire la suite
 				<i class="fas fa-arrow-right" aria-hidden="true"></i>
 			</a>

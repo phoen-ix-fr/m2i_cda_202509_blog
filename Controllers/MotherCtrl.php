@@ -22,4 +22,9 @@ namespace Blog\Controllers;
             include('views/'.$strTemplate.'.php');
             require("views/_partial/footer.php");
         }
+
+        protected function _notFound(){
+            header("Location:index.php?ctrl=errors&action=error_404");
+            exit();
+        }
     }

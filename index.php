@@ -18,7 +18,10 @@ spl_autoload_register(function($class) {
 
     $strFilename = './' . $strInversedSlash . '.php'; //< "./Controllers/ArticlesCtrl.php"
     
-    require_once $strFilename;
+    // On vérifie si le fichier existe avant de faire le require_once
+    if(file_exists($strFilename)) {
+        require_once $strFilename;
+    }
 });
 
 // Récupération des informations dans l'URL

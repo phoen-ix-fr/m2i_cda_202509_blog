@@ -1,9 +1,11 @@
 <?php
 
+namespace Blog\Controllers;
+
 /**
  * Classe mère des controllers
  */
-    class MotherCtrl {
+    abstract class MotherCtrl {
 
         protected array $_arrData = [];
 

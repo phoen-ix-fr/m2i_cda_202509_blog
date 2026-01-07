@@ -1,4 +1,9 @@
 <?php
+
+namespace Blog\Entities;
+
+use IntlDateFormatter;
+
 	class Article {
 		// Déclaration des attributs d'un article
 		private int $_id;
@@ -67,7 +72,11 @@
 
         public function getCreatedateFormat(string $strLocale = 'fr_FR'){
             // Traitement de date
-            $objDate			= new DateTime($this->getCreatedate());
+
+			// Pour les classes natives de PHP, deux solutions :
+			// - Soit \ (back-slash) avant le nom pour lui dire d'aller la récupérer en dehors des espaces de noms
+			// - Soit un use au début du fichier
+            $objDate			= new \DateTime($this->getCreatedate());
             $objDateFormatter	= new IntlDateFormatter(
                 $strLocale, // langue
                 IntlDateFormatter::LONG,  // format de date

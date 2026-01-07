@@ -1,9 +1,11 @@
 <?php
 
+namespace Blog\Models;
+
 /**
  * Modèle des articles
  */
-class Article_model extends Model_mother
+class ArticleModel extends MotherModel
 {
     public array $_arrSearch = [];
 

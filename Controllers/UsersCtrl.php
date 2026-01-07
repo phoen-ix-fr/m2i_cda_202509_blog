@@ -1,9 +1,15 @@
 <?php
+
+namespace Blog\Controllers;
+
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
-    require("models/user_model.php");
-    require("entities/user_entity.php");
+    // require("models/user_model.php");
+    use Blog\Models\UserModel;
+
+    // require("entities/user_entity.php");
+    use Blog\Entities\User;
 
     /**
      * Controller des utilisateurs
@@ -37,7 +43,7 @@
 
                 // Si pas d'erreur => vérification de l'utilisateur en BDD
                 if (count($arrError) == 0) {
-                    $objUserModel = new User_model();
+                    $objUserModel = new UserModel();
                     $arrUser = $objUserModel->getUserByMailAndPwd($strMail, $strPwd);
                     if ($arrUser === false) { // utilisateur non trouvé !$arrUser
                         $arrError[] = "Erreur de connexion";
@@ -116,7 +122,7 @@
 
                 // Si pas d'erreur => insertion en bdd
                 if (count($arrError) == 0) {
-                    $objUserModel = new User_model();
+                    $objUserModel = new UserModel();
                     $boolInsert = $objUserModel->addUser($objUser);
                     if ($boolInsert) {
                         // Si insertion ok
@@ -188,7 +194,7 @@
             }
 
             // Récupérer les données de l'utilisateur
-            $objUserModel	= new User_model();
+            $objUserModel	= new UserModel();
             $arrUser		= $objUserModel->getUserById($_SESSION['user']['user_id']);
 
             $objUser		= new User();

@@ -1,5 +1,7 @@
 <?php
 
+namespace Blog\Controllers;
+
 /**
  * Controller des pages de contenu
  */

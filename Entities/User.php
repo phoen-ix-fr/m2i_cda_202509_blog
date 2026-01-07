@@ -1,4 +1,7 @@
 <?php
+
+namespace Blog\Entities;
+
 	class User {
 		// Déclaration des attributs d'un utilisateur
 		private int $_id;

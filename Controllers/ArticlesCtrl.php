@@ -1,6 +1,17 @@
 <?php
-    require("models/article_model.php");
-    require("entities/article_entity.php");
+
+// Espace de nom suivant le répertoire
+namespace Blog\Controllers;
+
+// Changement des requires en "use" :
+// require("models/article_model.php");
+use Blog\Models\ArticleModel;
+
+use Blog\Models\UserModel;
+
+// require("entities/article_entity.php");
+use Blog\Entities\Article;
+
 /**
  * Controller des articles
  */
@@ -20,7 +31,7 @@
             // Variable technique
             $this->_arrData['strPage']		= "index";
 
-            $objArticleModel                = new Article_model();
+            $objArticleModel                = new ArticleModel();
 
             $arrArticles                    = $objArticleModel->findAll(4);
 
@@ -52,7 +63,7 @@
             // Variable technique
             $this->_arrData['strPage']		= "blog";
 
-            $objArticleModel    = new Article_model();
+            $objArticleModel    = new ArticleModel();
 
             $objArticleModel->_arrSearch = array(
                 'strKeywords'	=> $_POST['keywords']??'',
@@ -78,8 +89,10 @@
             $this->_arrData['arrSearch']	= $objArticleModel->_arrSearch;
 
             // Récupération des utilisateurs
-            require("models/user_model.php");
-            $objUserModel = new User_model();
+            // Pas de use en milieu de code, toujours au début, 
+            // juste en dessous de la définition du namespace
+            // require("models/user_model.php");
+            $objUserModel = new UserModel();
             $this->_arrData['arrUsers'] 		= $objUserModel->findAllUser();
 
             $this->_display("blog");

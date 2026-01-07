@@ -1,10 +1,16 @@
 <?php
 
+namespace Blog\Models;
+
+use PDO;
+use PDOException;
+
     /**
      * Classe mère des modèles
      * Basé sur un Singleton puisqu'on teste l'instance
      */
-	class Model_mother {
+	abstract class MotherModel {
+        
 		protected object $_db;
         private static ?PDO $_dbInstance = null;
 
@@ -15,7 +21,7 @@
                     self::$_dbInstance = new PDO(
                         "mysql:host=localhost;dbname=blog_php",
                         "root",
-                        "",
+                        "root",
                         array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC)
                     );
                     self::$_dbInstance->exec("SET CHARACTER SET utf8");

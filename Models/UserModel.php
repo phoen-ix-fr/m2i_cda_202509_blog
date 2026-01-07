@@ -1,9 +1,14 @@
 <?php
 
+namespace Blog\Models;
+
+use PDO;
+
 /**
  * Modèle des utilisateurs
  */
-	class User_model extends Model_mother{
+	class UserModel extends MotherModel
+	{
 
         /**
          * Recherche de tous les utilisateurs

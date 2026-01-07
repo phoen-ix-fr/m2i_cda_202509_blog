@@ -18,7 +18,7 @@ class ErrorsCtrl extends MotherCtrl {
         // Variable technique
         $this->_arrData['strPage']		= "error_404";
 
-        $this->_display("error_404");
+        $this->_display("errors/error_404");
     }
 
     /**
@@ -35,7 +35,7 @@ class ErrorsCtrl extends MotherCtrl {
         // Variable technique
         $this->_arrData['strPage']		= "error_403";
 
-        $this->_display("error_403");
+        $this->_display("errors/error_403");
     }
 
 }

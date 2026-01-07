@@ -45,7 +45,7 @@ use Blog\Entities\Article;
 
             $this->_arrData['arrArticles'] = $arrArticlesToDisplay;
 
-            $this->_display("home");
+            $this->_display("articles/home");
 
         }
 
@@ -95,7 +95,7 @@ use Blog\Entities\Article;
             $objUserModel = new UserModel();
             $this->_arrData['arrUsers'] 		= $objUserModel->findAllUser();
 
-            $this->_display("blog");
+            $this->_display("articles/blog");
 
         }
 
@@ -131,6 +131,6 @@ use Blog\Entities\Article;
 
             $this->_arrData['objArticle']   = $objArticle;
 
-            $this->_display("show_article");
+            $this->_display("articles/show_article");
         }
     }

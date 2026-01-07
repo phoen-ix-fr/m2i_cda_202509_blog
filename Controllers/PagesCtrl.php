@@ -20,7 +20,7 @@ namespace Blog\Controllers;
             // Variable technique
             $this->_arrData['strPage']		    = "about";
 
-            $this->_display("about");
+            $this->_display("pages/about");
         }
 
         /**
@@ -37,7 +37,7 @@ namespace Blog\Controllers;
             // Variable technique
             $this->_arrData['strPage']		= "contact";
 
-            $this->_display("contact");
+            $this->_display("pages/contact");
         }
 
         /**
@@ -54,7 +54,7 @@ namespace Blog\Controllers;
             // Variable technique
             $this->_arrData['strPage']		= "mentions";
 
-            $this->_display("contact");
+            $this->_display("pages/contact");
         }
 
     }

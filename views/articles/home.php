@@ -4,7 +4,7 @@
 			<?php 
 				foreach ($arrArticles as $objArticle){
 					// Inclure le template de l'article
-					include("_partial/article.php");
+					include(dirname(__DIR__) ."/_partial/article.php");
 				}
 			?>
             </div>

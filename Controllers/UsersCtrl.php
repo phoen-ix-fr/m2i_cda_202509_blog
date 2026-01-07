@@ -64,7 +64,7 @@ namespace Blog\Controllers;
 
             // Variable technique
             $this->_arrData['strPage'] = "login";
-            $this->_display("login");
+            $this->_display("users/login");
         }
 
         /**
@@ -180,7 +180,7 @@ namespace Blog\Controllers;
             // Variable technique
             $this->_arrData['strPage']      = "create_account";
 
-            $this->_display("create_account");
+            $this->_display("users/create_account");
         }
 
         /**
@@ -262,7 +262,7 @@ namespace Blog\Controllers;
             // Variable technique
             $this->_arrData['strPage']		= "edit_account";
 
-            $this->_display("edit_account");
+            $this->_display("users/edit_account");
         }
 
     }

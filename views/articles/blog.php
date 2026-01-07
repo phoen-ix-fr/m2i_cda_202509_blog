@@ -119,6 +119,14 @@
             </form>
         </section>
 
+        <section class="mb-5 text-center">
+            <a href="index.php?ctrl=articles&action=create" 
+                class="btn btn-primary">
+                <i class="fas fa-plus-circle me-2" aria-hidden="true"></i>
+                Ecrire un nouvel article
+            </a>
+        </section>
+
         <!-- Liste des articles -->
         <section aria-labelledby="articles-heading">
             <h3 id="articles-heading" class="visually-hidden">Liste des articles</h3>

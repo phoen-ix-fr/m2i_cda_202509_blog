@@ -61,4 +61,14 @@ class ArticleModel extends MotherModel
         $arrArticles = $this->_db->query($strQuery)->fetchAll();
         return $arrArticles;
     }
+
+    /**
+     * Recherche un article par son ID
+     * @param int $id Identifiant unique de l'article
+     * @return ??
+     */
+    public function find(int $id)
+    {
+        
+    }
 }

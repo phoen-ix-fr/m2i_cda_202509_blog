@@ -99,5 +99,17 @@ use Blog\Entities\Article;
 
         }
 
+        public function show() 
+        {
+            // Création des variables d'affichage
+            $this->_arrData['strTitle'] 	= "Blog - Détail d'un article";
+            $this->_arrData['strH1'] 		= "Article";
+            $this->_arrData['strMetaDesc'] 	= "Découvrez qui nous sommes : notre équipe passionnée de développement web, notre mission et nos valeurs. Formations et expertise en programmation.";
+            $this->_arrData['strDesc']		= "Découvrez notre histoire, notre équipe et notre passion pour le développement web";
 
+            // Variable technique
+            $this->_arrData['strPage']		= "show_article";
+
+            $this->_display("show_article");
+        }
     }

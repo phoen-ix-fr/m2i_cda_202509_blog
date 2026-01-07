@@ -101,7 +101,12 @@ use Blog\Entities\Article;
 
         public function show() 
         {
-            $intArticleId = $_GET['id'];
+            $intArticleId = $_GET['id']??0;
+
+            // cf. https://www.php.net/manual/fr/function.is-int.php#82857
+            if(!ctype_digit($intArticleId) || $intArticleId === 0) {
+                $this->_notFound();
+            }
 
             // Création des variables d'affichage
             $this->_arrData['strMetaDesc'] 	= "Découvrez qui nous sommes : notre équipe passionnée de développement web, notre mission et nos valeurs. Formations et expertise en programmation.";

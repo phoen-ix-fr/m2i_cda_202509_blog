@@ -54,7 +54,7 @@ namespace Blog\Controllers;
             // Variable technique
             $this->_arrData['strPage']		= "mentions";
 
-            $this->_display("pages/contact");
+            $this->_display("pages/mentions");
         }
 
     }

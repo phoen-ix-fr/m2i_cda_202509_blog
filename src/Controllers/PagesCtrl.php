@@ -62,8 +62,7 @@ use Smarty\Smarty;
         
         public function test()
         {
-            $this->_arrData['name'] = "John";
-            
+            $this->_arrData['name'] = "John";            
             $this->_displaySmarty('index.tpl');
         }
         

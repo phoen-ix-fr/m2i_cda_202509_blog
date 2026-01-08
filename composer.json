@@ -1,0 +1,11 @@
+{
+    "name": "m2i/blog",
+    "description": "Blog",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "M2i\\Blog\\": "src/"
+        }
+    },
+    "require": {}
+}

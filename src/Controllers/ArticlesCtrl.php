@@ -46,7 +46,8 @@ class ArticlesCtrl extends MotherCtrl {
 
         $this->_arrData['arrArticles'] = $arrArticlesToDisplay;
 
-        $this->_display("articles/home");
+        // $this->_display("articles/home");
+        $this->_displaySmarty('articles/home.tpl');
 
     }
 

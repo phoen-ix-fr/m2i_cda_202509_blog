@@ -75,7 +75,8 @@
     </main>
 
     <footer class="py-3 mt-3 text-center text-body-secondary bg-body-tertiary" role="contentinfo">
-        <p>Créé par <a href="https://ce-formation.com/" rel="noopener">CE FORMATION</a></p>
+        <p>Créé par <a href="https://ce-formation.com/" rel="noopener">CE FORMATION</a>
+         et <a href="https://phoen-ix.fr" rel="noopener">Phoen-IX</a></p>
         <nav aria-label="Navigation pied de page">
             <ul class="list-inline">
                 <li class="list-inline-item">

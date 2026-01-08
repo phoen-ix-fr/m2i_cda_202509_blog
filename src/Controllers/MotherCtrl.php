@@ -31,6 +31,15 @@ abstract class MotherCtrl {
             // Configuration des chemins des templates compilés et du cache
             self::$_smartyInstance->setCompileDir('templates_c/');
             self::$_smartyInstance->setCacheDir('cache/');
+
+            // Activation ou non du cache Smarty à partir de la configuration
+            // du fichier .env
+            if($_ENV['SMARTY_CACHE'] == 'TRUE') {
+                self::$_smartyInstance->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+            }
+            else { 
+                self::$_smartyInstance->setCaching(Smarty::CACHING_OFF);
+            }
         }
 
         return self::$_smartyInstance;

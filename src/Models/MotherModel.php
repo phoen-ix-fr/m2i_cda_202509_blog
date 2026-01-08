@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\Models;
+namespace M2i\Blog\Models;
 
 use PDO;
 use PDOException;

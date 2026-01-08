@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\Controllers;
+namespace M2i\Blog\Controllers;
 
 /**
  * Classe mère des controllers

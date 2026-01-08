@@ -1,15 +1,15 @@
 <?php
 
-namespace Blog\Controllers;
+namespace M2i\Blog\Controllers;
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
     // require("models/user_model.php");
-    use Blog\Models\UserModel;
+    use M2i\Blog\Models\UserModel;
 
     // require("entities/user_entity.php");
-    use Blog\Entities\User;
+    use M2i\Blog\Entities\User;
 
     /**
      * Controller des utilisateurs

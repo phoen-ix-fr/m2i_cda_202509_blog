@@ -3,6 +3,7 @@
 // Toutes les pages utilisent les sessions
 session_start();
 
+/*
 // Déclaration de l'autoloader (manuel)
 spl_autoload_register(function($class) {
 
@@ -23,6 +24,10 @@ spl_autoload_register(function($class) {
         require_once $strFilename;
     }
 });
+*/
+
+// Chargement de l'autoloader de Composer
+require 'vendor/autoload.php';
 
 // Récupération des informations dans l'URL
 $ctrl   = $_GET['ctrl']??'articles';
@@ -33,7 +38,7 @@ $bool404 = false;
 
 // Création du nom de la classe
 // On spécifie le nom complet de la classe avec le namespace
-$strCtrlName    = 'Blog\\Controllers\\' . ucfirst($ctrl).'Ctrl';
+$strCtrlName    = 'M2i\\Blog\\Controllers\\' . ucfirst($ctrl).'Ctrl';
 
 // Test sur l'existence de la classe
 if (class_exists($strCtrlName)) {

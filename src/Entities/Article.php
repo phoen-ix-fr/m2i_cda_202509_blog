@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\Entities;
+namespace M2i\Blog\Entities;
 
 use IntlDateFormatter;
 

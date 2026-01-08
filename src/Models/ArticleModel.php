@@ -1,8 +1,8 @@
 <?php
 
-namespace Blog\Models;
+namespace M2i\Blog\Models;
 
-use Blog\Entities\Article;
+use M2i\Blog\Entities\Article;
 use PDO;
 
 /**

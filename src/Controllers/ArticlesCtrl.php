@@ -1,17 +1,17 @@
 <?php
 
 // Espace de nom suivant le répertoire
-namespace Blog\Controllers;
+namespace M2i\Blog\Controllers;
 
 use DateTime;
 
 // Changement des requires en "use" :
 // require("models/article_model.php");
-use Blog\Entities\Article;
+use M2i\Blog\Entities\Article;
 
 // require("entities/article_entity.php");
-use Blog\Models\UserModel;
-use Blog\Models\ArticleModel;
+use M2i\Blog\Models\UserModel;
+use M2i\Blog\Models\ArticleModel;
 
 /**
  * Controller des articles

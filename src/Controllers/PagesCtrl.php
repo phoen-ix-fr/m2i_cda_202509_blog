@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\Controllers;
+namespace M2i\Blog\Controllers;
 
 /**
  * Controller des pages de contenu

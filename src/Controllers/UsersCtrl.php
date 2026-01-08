@@ -2,8 +2,8 @@
 
 namespace M2i\Blog\Controllers;
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
     // require("models/user_model.php");
     use M2i\Blog\Models\UserModel;
@@ -90,7 +90,8 @@ namespace M2i\Blog\Controllers;
                 exit;
             }
 
-            include "config/config.php";
+            // Migration vers le fichier .env
+            // include "config/config.php";
 
             $objUser = new User;
 
@@ -122,29 +123,41 @@ namespace M2i\Blog\Controllers;
 
                 // Si pas d'erreur => insertion en bdd
                 if (count($arrError) == 0) {
+
                     $objUserModel = new UserModel();
                     $boolInsert = $objUserModel->addUser($objUser);
+
                     if ($boolInsert) {
+
                         // Si insertion ok
                         // => Envoyer le mail de demande de confirmation du compte
                         // A déporter dans un autre fichier pour réutiliser
-                        require 'libs/PHPMailer/Exception.php';
-                        require 'libs/PHPMailer/PHPMailer.php';
-                        require 'libs/PHPMailer/SMTP.php';
+                        //require 'libs/PHPMailer/Exception.php';
+                        //require 'libs/PHPMailer/PHPMailer.php';
+                        //require 'libs/PHPMailer/SMTP.php';
+
                         $objMail = new PHPMailer();
+                        
                         $objMail->IsSMTP();
                         $objMail->CharSet = PHPMailer::CHARSET_UTF8;
                         $objMail->Mailer = "smtp";
                         $objMail->SMTPDebug = 0;
                         $objMail->SMTPAuth = TRUE;
                         $objMail->SMTPSecure = "tls";
-                        $objMail->Port = 587;
-                        $objMail->Host = MAIL_HOST;
-                        $objMail->Username = MAIL_USER;
-                        $objMail->Password = MAIL_PWD;
+
+                        $objMail->Host = $_ENV['MAIL_HOST'];
+                        $objMail->Port = $_ENV['MAIL_PORT'];
+
+                        $objMail->Username = $_ENV['MAIL_USER'];
+                        $objMail->Password = $_ENV['MAIL_PWD'];
+
                         $objMail->IsHTML(true);
                         // Expéditeur
-                        $objMail->setFrom('contact@ce-formation.com', 'christel');
+                        $objMail->setFrom(
+                            $_ENV['MAIL_FROM_ADDRESS'], 
+                            $_ENV['MAIL_FROM_NAME']
+                        );
+
                         // Destinataire
                         $objMail->addAddress($objUser->getMail(), $strName);
                         // Sujet

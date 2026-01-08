@@ -19,9 +19,9 @@ use PDOException;
             if (self::$_dbInstance === null) {
                 try{
                     self::$_dbInstance = new PDO(
-                        "mysql:host=localhost;dbname=blog_php",
-                        "root",
-                        "root",
+                        "mysql:host=" . $_ENV['DB_HOSTNAME'] . ";dbname=" . $_ENV['DB_DATABASE'] . "",
+                        $_ENV['DB_USERNAME'],
+                        $_ENV['DB_PASSWORD'],
                         array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC)
                     );
                     self::$_dbInstance->exec("SET CHARACTER SET utf8");

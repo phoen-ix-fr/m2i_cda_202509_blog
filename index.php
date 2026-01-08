@@ -29,6 +29,10 @@ spl_autoload_register(function($class) {
 // Chargement de l'autoloader de Composer
 require 'vendor/autoload.php';
 
+// Chargement de la configuration depuis le fichier .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 // Récupération des informations dans l'URL
 $ctrl   = $_GET['ctrl']??'articles';
 $action = $_GET['action']??'home';

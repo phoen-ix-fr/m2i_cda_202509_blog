@@ -38,4 +38,6 @@ class ErrorsCtrl extends MotherCtrl {
         $this->_display("errors/error_403");
     }
 
+    
+
 }

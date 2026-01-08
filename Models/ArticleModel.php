@@ -2,6 +2,7 @@
 
 namespace Blog\Models;
 
+use Blog\Entities\Article;
 use PDO;
 
 /**
@@ -82,5 +83,28 @@ class ArticleModel extends MotherModel
         
         $rqPrepare->execute();
         return $rqPrepare->fetch();
+    }
+
+    public function add(Article $objArticle): bool|int
+    {
+        $strQuery = "INSERT INTO articles(article_title, article_img, 
+            article_content, article_createdate, article_creator)
+            VALUES (:title, :img, :content, :createdate, :creator)";
+
+        $rqPrepare	= $this->_db->prepare($strQuery);
+
+        $rqPrepare->bindValue(":title", $objArticle->getTitle(), PDO::PARAM_STR);
+        $rqPrepare->bindValue(":img", $objArticle->getImg(), PDO::PARAM_STR);
+        $rqPrepare->bindValue(":content", $objArticle->getContent(), PDO::PARAM_STR);
+        $rqPrepare->bindValue(":createdate", $objArticle->getCreatedate(), PDO::PARAM_STR);
+        $rqPrepare->bindValue(":creator", $objArticle->getCreator(), PDO::PARAM_INT);
+
+        if($rqPrepare->execute()) {
+
+            return $this->_db->lastInsertId();
+        }
+        else {
+            return false;
+        }
     }
 }

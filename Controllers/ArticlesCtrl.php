@@ -3,14 +3,15 @@
 // Espace de nom suivant le répertoire
 namespace Blog\Controllers;
 
+use DateTime;
+
 // Changement des requires en "use" :
 // require("models/article_model.php");
-use Blog\Models\ArticleModel;
-
-use Blog\Models\UserModel;
+use Blog\Entities\Article;
 
 // require("entities/article_entity.php");
-use Blog\Entities\Article;
+use Blog\Models\UserModel;
+use Blog\Models\ArticleModel;
 
 /**
  * Controller des articles
@@ -136,9 +137,10 @@ class ArticlesCtrl extends MotherCtrl {
 
     public function create() 
     {        
-        // TODO Vérifier si l'utilisateur est connecté
-        
-        
+        // Vérifier si l'utilisateur est connecté
+        if (!isset($_SESSION['user'])) {
+            $this->_forbidden();
+        }        
 
         $this->_arrData['strTitle']     = "Créer un article";
         $this->_arrData['strH1']        = "Créer un article";
@@ -150,7 +152,48 @@ class ArticlesCtrl extends MotherCtrl {
         // TODO Traitement ici du formulaire
         $arrError = array();
         
-        
+        if (count($_POST) > 0) {
+            
+            // Récupérer les données du formulaire
+            $strTitle    = $_POST['title'] ?? "";
+            $strContent = $_POST['content'] ?? "";
+            $strImage   = $_POST['image'] ?? "";
+
+            if($strTitle == "") {
+                $arrError['title'] = "Le titre est obligatoire";
+            }
+            
+            if($strContent == "") {
+                $arrError['content'] = "Un contenu est obligatoire";
+            }
+
+            $intCreatorId = $_SESSION['user']['user_id'];
+            $strCreateDate = date('Y-m-d H:i:s');
+
+            $objArticle = new Article();
+            $objArticle->hydrate([
+                'article_title'         => $strTitle,
+                'article_content'       => $strContent,
+                'article_img'           => $strImage,
+                'article_creator'       => $intCreatorId,
+                'article_createdate'    => $strCreateDate
+            ]);
+
+            if (count($arrError) == 0) {
+
+                $objArticleModel = new ArticleModel();
+
+                $intInsert = $objArticleModel->add($objArticle);
+
+                if($intInsert) {
+
+                    $this->_redirect('articles', 'show', ['id' => $intInsert]);
+                }
+                else {
+                    $arrError[] = "Un erreur s'est produite, contactez l'administrateur";
+                }
+            }
+        }
         
         $this->_arrData['arrError']     = $arrError;
         $this->_display("articles/create");

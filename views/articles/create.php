@@ -2,6 +2,7 @@
 	<div class="mb-2 col-6">
 		<label>Titre</label>
 		<input type="text" name="title" value="<?php  ?>"
+			required
 			class="form-control  <?php if(isset($arrError['title'])) { echo "is-invalid"; } ?>" />
 	</div>
 	<div class="mb-2 col-6">
@@ -13,7 +14,7 @@
 	</div>
 	<div class="mb-2 col-12">
 		<label>Contenu de l'article</label>
-        <textarea name="content" rows="20"
+        <textarea name="content" rows="20" required
             class="form-control <?php if(isset($arrError['content'])) { echo "is-invalid"; } ?>">
             
             <?php  ?>

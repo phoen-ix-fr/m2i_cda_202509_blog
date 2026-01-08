@@ -23,8 +23,38 @@ namespace Blog\Controllers;
             require("views/_partial/footer.php");
         }
 
-        protected function _notFound(){
+        protected function _notFound()
+        {
             header("Location:index.php?ctrl=errors&action=error_404");
+            exit();
+        }
+
+        protected function _forbidden()
+        {
+            header("Location:index.php?ctrl=errors&action=error_403");
+            exit();
+        }
+
+        /**
+         * Redirection vers une URL donnée
+         * 
+         * @param string $controller
+         * @param string $action
+         * @param array $params (facultatif)
+         */
+        protected function _redirect(string $controller, string $action, array $params = [])
+        {
+            $header = "Location:index.php?ctrl=$controller&action=$action";
+
+            // Dans le param, les données sont sous la forme clé=>valeur
+            // ex. ['id' => 3, 'page' => 6]
+            // final attendu à la fin du header : ...&id=3&page=6
+
+            foreach($params as $key => $value) {
+                $header .= '&' . $key . '=' . $value;
+            }
+
+            header($header);
             exit();
         }
     }

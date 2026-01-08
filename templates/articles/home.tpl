@@ -10,7 +10,7 @@
             {* On transmet au gabarit partiel le contenu de la variable $objArticle *}
             {include '_partials/article.tpl' article=$objArticle}
 
-    {{/foreach}}
+    {/foreach}
     </div>
 </section>
 

@@ -6,3 +6,7 @@
 
 # On conserve tout de même un fichier d'exemple avec les clés nécessaires
 !.env.example
+
+# On ignore tous les fichiers de cache et de compilation de Smarty
+/cache/
+/templates_c/

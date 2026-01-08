@@ -155,9 +155,8 @@ class ArticlesCtrl extends MotherCtrl {
         if (count($_POST) > 0) {
             
             // Récupérer les données du formulaire
-            $strTitle    = $_POST['title'] ?? "";
-            $strContent = $_POST['content'] ?? "";
-            $strImage   = $_POST['image'] ?? "";
+            $strTitle       = $_POST['title'] ?? "";
+            $strContent     = $_POST['content'] ?? "";
 
             if($strTitle == "") {
                 $arrError['title'] = "Le titre est obligatoire";
@@ -170,16 +169,41 @@ class ArticlesCtrl extends MotherCtrl {
             $intCreatorId = $_SESSION['user']['user_id'];
             $strCreateDate = date('Y-m-d H:i:s');
 
-            $objArticle = new Article();
-            $objArticle->hydrate([
-                'article_title'         => $strTitle,
-                'article_content'       => $strContent,
-                'article_img'           => $strImage,
-                'article_creator'       => $intCreatorId,
-                'article_createdate'    => $strCreateDate
-            ]);
-
             if (count($arrError) == 0) {
+
+                $strImage = "";
+
+                // Récupération de l'image postée
+                if (count($_FILES) > 0 && isset($_FILES['image'])) {
+
+                    $strImageName       = $_FILES['image']['name'] ?? "";
+                    $intImageSize       = $_FILES['image']['size'] ?? 0;
+                    $strImageTmpName    = $_FILES['image']['tmp_name'] ?? "";
+                    $strImageExtension  = strtolower(pathinfo($strImageName, PATHINFO_EXTENSION));
+
+                    // On construit le nom de l'image final sur le disque
+                    // uniqid => permet de générer une chaine alphanumérique unique (aléatoire)
+                    // On acolle ensuite l'extension du fichier source
+                    $strImage = uniqid() . '.' . $strImageExtension;
+                    $strImageDstName    = "assets/images/" . $strImage;
+
+                    if($strImageName != "" 
+                        && $intImageSize > 0 
+                        && $strImageTmpName != "") {
+                        
+                        // Récupérer l'image et l'enregistrer dans /assets/images
+                        move_uploaded_file($strImageTmpName, $strImageDstName);
+                    }
+                }
+
+                $objArticle = new Article();
+                $objArticle->hydrate([
+                    'article_title'         => $strTitle,
+                    'article_content'       => $strContent,
+                    'article_img'           => $strImage,
+                    'article_creator'       => $intCreatorId,
+                    'article_createdate'    => $strCreateDate
+                ]);
 
                 $objArticleModel = new ArticleModel();
 

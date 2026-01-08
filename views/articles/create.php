@@ -1,4 +1,4 @@
-<form method="post" class="row">
+<form method="post" class="row" enctype="multipart/form-data">
 	<div class="mb-2 col-6">
 		<label>Titre</label>
 		<input type="text" name="title" value="<?php  ?>"

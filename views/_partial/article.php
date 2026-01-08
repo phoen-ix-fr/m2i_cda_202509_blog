@@ -15,7 +15,9 @@
 			</a>
 		</div>
 		<div class="col-auto d-none d-lg-block">
+			<?php if($objArticle->getImg()) { ?>
 			<img class="bd-placeholder-img" width="200" height="250" src="assets/images/<?php echo $objArticle->getImg(); ?>" alt="<?php echo $objArticle->getTitle(); ?>" loading="lazy">
+			<?php } ?>
 		</div>
 	</div>
 </article>

@@ -2,6 +2,8 @@
 
 namespace M2i\Blog\Controllers;
 
+use Smarty\Smarty;
+
 /**
  * Controller des pages de contenu
  */
@@ -56,5 +58,25 @@ namespace M2i\Blog\Controllers;
 
             $this->_display("pages/mentions");
         }
+
+        
+        public function test()
+        {
+            // Création de l'instance de Smarty
+            $smarty = new Smarty();
+
+            // Définition du chemin des templates (gabarits) qui seront utilisés
+            $smarty->setTemplateDir('templates/');
+
+            // Configuration des chemins des templates compilés et du cache
+            $smarty->setCompileDir('templates_c/');
+            $smarty->setCacheDir('cache/');
+
+            // $smarty->assign('name', 'Ned');
+
+            // Affichage de la page générée à partir du template
+            $smarty->display('index.tpl');
+        }
+        
 
     }

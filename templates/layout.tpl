@@ -36,11 +36,13 @@
                         <h1 class="h3 mb-0">Mon Blog</h1>
                     </a>
                 </div>
-				{* TODO <?php include("views/_partial/nav_user.php"); ?> *}
+				{* <?php include("views/_partial/nav_user.php"); ?> *}
+                {include '_partials/nav_user.tpl'}
             </div>
         </header>
 
         {* TODO <?php require("nav.php"); ?> *}
+        {include '_partials/nav.tpl'}
     </div>
 
     <main id="main-content" class="container" role="main">
@@ -58,11 +60,12 @@
             </div>
         </section>
 
-{* TODO
+{*
 <?php
 	require("views/_partial/message.php");
 ?>
 *}
+    {include '_partials/message.tpl'}
 
     {* Contenu spécifique à chaque page *}
     {block name="content"}

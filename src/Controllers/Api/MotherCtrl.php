@@ -44,9 +44,10 @@ abstract class MotherCtrl
         return $errorJson;
     }
 
-    protected function jsonSuccessResponse(array $data, string $message = "")
+    protected function jsonSuccessResponse(array $data, string $message = "", int $httpCode = 200)
     {
         header('Content-Type: application/json; charset=utf-8');
+        http_response_code($httpCode);
 
         $json = json_encode([
             'success'   => true,

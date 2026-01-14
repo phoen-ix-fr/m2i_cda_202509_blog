@@ -107,4 +107,14 @@ class ArticleModel extends MotherModel
             return false;
         }
     }
+
+    public function remove(int $id): bool
+    {
+        $strQuery = "DELETE FROM articles WHERE article_id=:id";
+
+        $rqPrepare	= $this->_db->prepare($strQuery);
+
+        $rqPrepare->bindValue(":id", $id, PDO::PARAM_INT);
+        return $rqPrepare->execute();
+    }
 }

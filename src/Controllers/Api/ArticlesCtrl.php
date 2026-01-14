@@ -121,9 +121,16 @@ class ArticlesCtrl extends MotherCtrl
      */
     protected function delete()
     {
-        $input = file_get_contents('php://input');
-        var_dump($input);
+        $intArticleId = $_GET['id'];
+        
+        $objArticleModel = new ArticleModel();
 
-        echo "Delete (Methode DELETE)";
+        if ($objArticleModel->remove($intArticleId)) {
+
+            echo $this->jsonSuccessResponse([], "L'article a été supprimé", 204);
+        }
+        else {
+            echo $this->jsonErrorResponse("500", "Une erreur est survenue");  
+        }
     }
 }

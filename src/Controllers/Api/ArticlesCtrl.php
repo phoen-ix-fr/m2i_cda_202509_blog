@@ -2,6 +2,7 @@
 
 namespace M2i\Blog\Controllers\Api;
 
+use M2i\Blog\Entities\Article;
 use M2i\Blog\Models\ArticleModel;
 
 class ArticlesCtrl
@@ -119,10 +120,55 @@ class ArticlesCtrl
      */
     function create()
     {
+        // Lorsqu'une requête est envoyée avec un corps au format JSON, les données sont
+        // récupérables dans le fichier php://input de la manière ci-dessous :
         $input = file_get_contents('php://input');
-        var_dump($input);
 
-        echo "Create (Methode POST)";
+        // @TODO La création se fait toujours sur l'utilisateur ID = 1 (pour les tests)
+        $intCreatorId   = 1;
+
+        $strCreateDate  = date('Y-m-d H:i:s');
+
+        $strImage       = "";
+        
+        if($input)
+        {
+            // Les données sont dans le format JSON (donc decode à faire)
+            $jsonData = json_decode($input, true);
+
+            $strTitle       = $jsonData['title'] ?? "";
+            $strContent     = $jsonData['content'] ?? "";
+
+            $objArticle = new Article();
+            $objArticle->hydrate([
+                'article_title'         => $strTitle,
+                'article_content'       => $strContent,
+                'article_img'           => $strImage,
+                'article_creator'       => $intCreatorId,
+                'article_createdate'    => $strCreateDate
+            ]);
+
+            $objArticleModel = new ArticleModel();
+
+            $intInsert = $objArticleModel->add($objArticle);
+
+            $objNewArticle = $objArticleModel->findById($intInsert);
+
+            echo $this->jsonSuccessResponse($objNewArticle, "Article créé avec succès");
+        }
+        elseif(count($_POST) > 0)
+        {
+            // Les données sont dans un format data-form (donc vérifier si $_FILES)
+
+            $strTitle       = $_POST['title'] ?? "";
+            $strContent     = $_POST['content'] ?? "";
+
+        }
+        else
+        {
+            // Pas de données envoyées, renvoyer un message d'erreur 400
+            echo $this->jsonErrorResponse(400, "Aucune donnée n'a été envoyée");
+        }
     }
 
     /**

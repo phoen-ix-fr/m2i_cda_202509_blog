@@ -2,6 +2,8 @@
 
 namespace M2i\Blog\Controllers\Api;
 
+use M2i\Blog\Models\ArticleModel;
+
 class ArticlesCtrl
 {
     private function getRequestMethod()
@@ -9,12 +11,61 @@ class ArticlesCtrl
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    private function jsonErrorResponse(int $httpCode, string $message)
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        http_response_code($httpCode);
+
+        $errorJson = json_encode([
+            'success'   => false,
+            'error'     => [
+                'message'   => $message
+            ]
+        ]);
+
+        return $errorJson;
+    }
+
+    private function jsonSuccessResponse(array $data, string $message = "")
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        $json = json_encode([
+            'success'   => true,
+            'data'      => $data,
+            'message'   => $message
+        ]);
+
+        if(json_last_error() !== JSON_ERROR_NONE) {
+
+            $errorJson = json_encode([
+                'success'   => false,
+                'error'     => [
+                    'message'   => json_last_error_msg()
+                ]
+            ]);
+
+            return $errorJson;
+        }
+        else {
+            return $json;
+        }
+    }
+
     public function home()
     {
         switch($this->getRequestMethod())
         {
             case 'GET':
-                $this->getAll();
+
+                // Vérifie si un id est présent dans l'URL
+                if($_GET['id']??false) {
+                    $this->getOne();
+                }
+                else {
+                    $this->getAll();
+                }
+
                 break;
 
             case 'POST':
@@ -28,31 +79,7 @@ class ArticlesCtrl
             case 'DELETE':
                 $this->delete();
                 break;
-            
         }
-    }
-
-
-
-    /**
-     * GET api/articles/test
-     * Méthode de test pour l'appel API REST
-     */
-    function test()
-    {
-        var_dump($_SERVER);
-
-        /*
-        header('Content-Type: application/json; charset=utf-8');
-
-        $json = json_encode([
-            'success'   => true,
-            'data'      => [],
-            'message'   => "Mon API est fonctionnelle"
-        ]);
-
-        echo $json;
-        */
     }
 
     /**
@@ -61,7 +88,10 @@ class ArticlesCtrl
      */
     function getAll()
     {
-        echo "Get ALL (Methode GET)";
+        $objArticleModel    = new ArticleModel();
+        $arrArticles        = $objArticleModel->findAll();
+
+        echo $this->jsonSuccessResponse($arrArticles);        
     }
 
     /**
@@ -70,7 +100,17 @@ class ArticlesCtrl
      */
     function getOne()
     {
+        $intArticleId = $_GET['id'];
+        
+        $objArticleModel    = new ArticleModel();
+        $arrArticle = $objArticleModel->findById($intArticleId);
 
+        if (!$arrArticle) {
+            echo $this->jsonErrorResponse(404, "L'article demandé n'existe pas");
+        }
+        else {
+            echo $this->jsonSuccessResponse($arrArticle);  
+        }
     }
 
     /**
@@ -83,7 +123,6 @@ class ArticlesCtrl
         var_dump($input);
 
         echo "Create (Methode POST)";
-
     }
 
     /**

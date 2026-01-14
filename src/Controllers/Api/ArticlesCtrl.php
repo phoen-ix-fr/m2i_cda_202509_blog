@@ -12,6 +12,26 @@ class ArticlesCtrl
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    private function getInput()
+    {
+        // Lorsqu'une requête est envoyée avec un corps au format JSON, les données sont
+        // récupérables dans le fichier php://input de la manière ci-dessous :
+        $input = file_get_contents('php://input');
+
+        if($input) 
+        { 
+            return json_decode($input, true); 
+        }
+        elseif(count($_POST) > 0) 
+        { 
+            return $_POST; 
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
     private function jsonErrorResponse(int $httpCode, string $message)
     {
         header('Content-Type: application/json; charset=utf-8');
@@ -120,24 +140,40 @@ class ArticlesCtrl
      */
     function create()
     {
-        // Lorsqu'une requête est envoyée avec un corps au format JSON, les données sont
-        // récupérables dans le fichier php://input de la manière ci-dessous :
-        $input = file_get_contents('php://input');
-
         // @TODO La création se fait toujours sur l'utilisateur ID = 1 (pour les tests)
         $intCreatorId   = 1;
-
         $strCreateDate  = date('Y-m-d H:i:s');
-
         $strImage       = "";
-        
-        if($input)
-        {
-            // Les données sont dans le format JSON (donc decode à faire)
-            $jsonData = json_decode($input, true);
 
-            $strTitle       = $jsonData['title'] ?? "";
-            $strContent     = $jsonData['content'] ?? "";
+        $arrInputData   = $this->getInput();
+
+        if($arrInputData) 
+        {
+            $strTitle       = $arrInputData['title'] ?? "";
+            $strContent     = $arrInputData['content'] ?? "";
+
+            // Récupération de l'image postée
+            if (count($_FILES) > 0 && isset($_FILES['image'])) {
+
+                $strImageName       = $_FILES['image']['name'] ?? "";
+                $intImageSize       = $_FILES['image']['size'] ?? 0;
+                $strImageTmpName    = $_FILES['image']['tmp_name'] ?? "";
+                $strImageExtension  = strtolower(pathinfo($strImageName, PATHINFO_EXTENSION));
+
+                // On construit le nom de l'image final sur le disque
+                // uniqid => permet de générer une chaine alphanumérique unique (aléatoire)
+                // On acolle ensuite l'extension du fichier source
+                $strImage = uniqid() . '.' . $strImageExtension;
+                $strImageDstName    = "assets/images/" . $strImage;
+
+                if($strImageName != "" 
+                    && $intImageSize > 0 
+                    && $strImageTmpName != "") {
+                    
+                    // Récupérer l'image et l'enregistrer dans /assets/images
+                    move_uploaded_file($strImageTmpName, $strImageDstName);
+                }
+            }
 
             $objArticle = new Article();
             $objArticle->hydrate([
@@ -155,14 +191,6 @@ class ArticlesCtrl
             $objNewArticle = $objArticleModel->findById($intInsert);
 
             echo $this->jsonSuccessResponse($objNewArticle, "Article créé avec succès");
-        }
-        elseif(count($_POST) > 0)
-        {
-            // Les données sont dans un format data-form (donc vérifier si $_FILES)
-
-            $strTitle       = $_POST['title'] ?? "";
-            $strContent     = $_POST['content'] ?? "";
-
         }
         else
         {

@@ -46,6 +46,8 @@ class ArticlesCtrl extends MotherCtrl
     {
         // @TODO La création se fait toujours sur l'utilisateur ID = 1 (pour les tests)
         $intCreatorId   = 1;
+
+        
         $strCreateDate  = date('Y-m-d H:i:s');
         $strImage       = "";
 

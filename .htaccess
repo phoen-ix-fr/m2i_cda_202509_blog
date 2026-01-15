@@ -3,6 +3,7 @@ RewriteEngine on
 
 # Réécrit /api/articles/test en index.php?ctrl=api\articles&action=test
 RewriteRule ^api/([a-zA-Z]+)/?$ index.php?ctrl=api\\$1 [L,QSA]
+RewriteRule ^api/([a-zA-Z]+)\/?([a-zA-Z]+)/?$ index.php?ctrl=api\\$1&action=$2 [L,QSA]
 
 # Réécrit /articles/home en index.php?ctrl=articles&action=home
 RewriteRule ^([a-zA-Z]+)\/?$ index.php?ctrl=$1&action=home [L,QSA]

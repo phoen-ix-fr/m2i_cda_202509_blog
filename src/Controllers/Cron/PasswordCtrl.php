@@ -5,6 +5,10 @@ namespace M2i\Blog\Controllers\Cron;
 use M2i\Blog\Entities\User;
 use M2i\Blog\Models\UserModel;
 
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class PasswordCtrl
 {
     protected function getHostRequest(): string
@@ -14,8 +18,17 @@ class PasswordCtrl
 
     public function home()
     {
+        $objLogger = new Logger('cron');
+
+        $objStreamHandlerInfo   = new StreamHandler('logs/cron.log', Level::Info);
+        $objStreamHandlerError  = new StreamHandler('logs/cron_error.log', Level::Error);
+
+        $objLogger->pushHandler($objStreamHandlerInfo);
+        $objLogger->pushHandler($objStreamHandlerError);
+
         if($this->getHostRequest() !== $_ENV['CRON_ALLOWED_HOST'])
         {
+            $objLogger->info("Tentative d'appel CRON depuis un hôte non autorisé");
             exit;
         }
 
@@ -34,11 +47,11 @@ class PasswordCtrl
 
             if($objUserModel->editUser($objUser))
             {
-                echo "User " . $objUser->getId() . " modifié avec succès";
+                $objLogger->info("User " . $objUser->getId() . " modifié avec succès");
             }
             else
             {
-                echo "Une erreur est survenue lors de la modification du user " . $objUser->getId();
+                $objLogger->error("Une erreur est survenue lors de la modification du user " . $objUser->getId());
             }
         }
     }

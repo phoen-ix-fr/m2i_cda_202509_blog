@@ -10,3 +10,6 @@
 # On ignore tous les fichiers de cache et de compilation de Smarty
 /cache/
 /templates_c/
+
+# On ignore les fichiers de logs
+/logs/

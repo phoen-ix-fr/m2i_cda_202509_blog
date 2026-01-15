@@ -1,6 +1,9 @@
 Options FollowSymLinks
 RewriteEngine on
 
+# Réécrit pour les appels des tâches CRON
+RewriteRule ^cron/([a-zA-Z]+)/?$ index.php?ctrl=cron\\$1 [L,QSA]
+
 # Réécrit /api/articles/test en index.php?ctrl=api\articles&action=test
 RewriteRule ^api/([a-zA-Z]+)/?$ index.php?ctrl=api\\$1 [L,QSA]
 RewriteRule ^api/([a-zA-Z]+)\/?([a-zA-Z]+)/?$ index.php?ctrl=api\\$1&action=$2 [L,QSA]

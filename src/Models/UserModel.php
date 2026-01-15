@@ -119,7 +119,15 @@ use PDO;
 			$rqPrepare->bindValue(":name", $objUser->getName(), PDO::PARAM_STR);
 			$rqPrepare->bindValue(":firstname", $objUser->getFirstname(), PDO::PARAM_STR);
 			$rqPrepare->bindValue(":mail", $objUser->getMail(), PDO::PARAM_STR);
-			$rqPrepare->bindValue(":id", $_SESSION['user']['user_id'], PDO::PARAM_INT);
+			
+			if(isset($_SESSION['user'])) {
+				$rqPrepare->bindValue(":id", $_SESSION['user']['user_id'], PDO::PARAM_INT);
+			}
+			else
+			{
+				$rqPrepare->bindValue(":id", $objUser->getId(), PDO::PARAM_INT);
+			}
+			
 			if ($objUser->getPwd() != ""){
 				$rqPrepare->bindValue(":pwd", $objUser->getPwd(), PDO::PARAM_STR);
 			}
@@ -137,5 +145,15 @@ use PDO;
 			$rqPrepare->bindValue(":id", $userId, PDO::PARAM_INT);
 
 			return $rqPrepare->execute();
+		}
+
+		public function getUnhashedPassword(): bool|array
+		{
+			$strQuery	= "SELECT user_id, user_name, user_firstname, user_mail, user_pwd FROM users WHERE user_pwd NOT LIKE '$2y%'";	
+
+			$rqPrepare	= $this->_db->prepare($strQuery);
+			
+			$rqPrepare->execute();
+			return $rqPrepare->fetchAll();	
 		}
 	}

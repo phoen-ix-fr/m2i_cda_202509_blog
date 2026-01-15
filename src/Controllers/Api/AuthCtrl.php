@@ -54,10 +54,15 @@ class AuthCtrl
         {
             // Utilisateur trouvé
 
+            // Information du token qui sera stockée en base de données pour vérification
+            $strUserToken = uniqid(); 
+            $objUserModel->setToken($arrUser['user_id'], $strUserToken);
+
             $payload = [
                 'user_id'       => $arrUser['user_id'],
                 'user_email'    => $arrData['email'],
-                'expires_at'    => time() + $_ENV['JWT_LIFETIME']         //< Expire au bout de 5 minutes (5*60 secondes)
+                'expires_at'    => time() + $_ENV['JWT_LIFETIME'],         //< Expire au bout de 5 minutes (5*60 secondes)
+                'user_token'    => $strUserToken
             ];
 
             /**
@@ -82,6 +87,6 @@ class AuthCtrl
      */
     public function logout()
     {
-        
+        // Uniquement si on stocke en base de données un hash du jeton
     }
 }

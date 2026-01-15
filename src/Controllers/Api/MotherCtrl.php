@@ -7,7 +7,6 @@ use Firebase\JWT\Key;
 use M2i\Blog\Models\UserModel;
 use M2i\Blog\Traits\CanResponse;
 use M2i\Blog\Traits\Requestable;
-use stdClass;
 
 abstract class MotherCtrl
 {
@@ -55,6 +54,9 @@ abstract class MotherCtrl
 
         // Si la requête SQL ne revneoi rien, on retourne null
         if(!$checkUser) { return null; }
+
+        // Vérifier si le token est bien le dernier généré (celui correspondant à l'info en base)
+        if($decoded->user_token !== $checkUser['user_token']) { return null; }
 
         return $checkUser;
     }

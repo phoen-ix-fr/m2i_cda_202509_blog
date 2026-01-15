@@ -19,7 +19,7 @@
 
 	<div class="mb-2 col-6">
 		<label>Mot de passe</label>
-		<input type="password" name="pwd" 
+		<input type="password" name="clearPwd" 
 			class="form-control  <?php if(isset($arrError['pwd'])) { echo "is-invalid"; } ?>" />
 	</div>
 

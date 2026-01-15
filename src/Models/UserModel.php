@@ -52,7 +52,7 @@ use PDO;
          */
 		function getUserById(int $intId):array|bool{
 			// Récupérer l'utilisateur
-			$strQuery	= "SELECT user_id, user_name, user_firstname, user_mail
+			$strQuery	= "SELECT user_id, user_name, user_firstname, user_mail, user_token
 							FROM users
 							WHERE user_id = :id
 							";
@@ -112,4 +112,16 @@ use PDO;
 			
 			return $rqPrepare->execute();
 		}	
+
+		function setToken(int $userId, string $jwtToken)
+		{
+			$strQuery	= "UPDATE users SET user_token = :token
+							WHERE user_id = :id";
+			
+			$rqPrepare	= $this->_db->prepare($strQuery);
+			$rqPrepare->bindValue(":token", $jwtToken, PDO::PARAM_STR);
+			$rqPrepare->bindValue(":id", $userId, PDO::PARAM_INT);
+
+			return $rqPrepare->execute();
+		}
 	}

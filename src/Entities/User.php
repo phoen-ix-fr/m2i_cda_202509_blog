@@ -11,6 +11,8 @@ class User extends MotherEntity {
 	private string $_mail='';
 	private string $_pwd;
 
+	private ?string $_strClearPwd = null;
+
 	public function __construct()
 	{
 		$this->_prefix = 'user';
@@ -42,8 +44,25 @@ class User extends MotherEntity {
 	public function setPwd(string $strPwd){
 		$this->_pwd = $strPwd;
 	}
+
 	public function getPwd():string{
+
+		// Si un mot de passe en clair est présent, je le chiffre et le renvoi
+		if($this->_strClearPwd) {
+			$this->_pwd = password_hash($this->_strClearPwd, PASSWORD_DEFAULT);
+		}
+
+		// Sinon, comportement par défaut, on renvoi le mot de passe présent (qui doit être chiffré)
 		return $this->_pwd;
 	}
-	
+
+	public function setClearPwd(string $password)
+	{
+		$this->_strClearPwd = $password;
+	}	
+
+	public function getClearPwd(): string
+	{
+		return $this->_strClearPwd;
+	}
 }

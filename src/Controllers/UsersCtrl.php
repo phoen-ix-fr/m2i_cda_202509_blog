@@ -116,9 +116,9 @@ use PHPMailer\PHPMailer\Exception;
                     $arrError['mail'] = "Le mail est invalide";
                 }
                 if ($objUser->getPwd() == "") {
-                    $arrError['pwd'] = "Le mot de passe est obligatoire";
-                } else if ($objUser->getPwd() != $_POST['confirm_pwd']) {
-                    $arrError['pwd'] = "Le mot de passe doit être identique à sa confirmation";
+                    $arrError['clearPwd'] = "Le mot de passe est obligatoire";
+                } else if ($objUser->getClearPwd() != $_POST['confirm_pwd']) {
+                    $arrError['clearPwd'] = "Le mot de passe doit être identique à sa confirmation";
                 }
 
                 // Si pas d'erreur => insertion en bdd

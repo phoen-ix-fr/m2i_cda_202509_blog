@@ -53,12 +53,11 @@ class AuthCtrl
         else
         {
             // Utilisateur trouvé
-            $key = 'votre_secret_super_long_et_securise_minimum_64_caracteres_aleatoires'; //< Clé de sécurité JWT, utilisée pour l'encodage du jeton
 
             $payload = [
                 'user_id'       => $arrUser['user_id'],
                 'user_email'    => $arrData['email'],
-                'expires_at'    => time() + 300         //< Expire au bout de 5 minutes (5*60 secondes)
+                'expires_at'    => time() + $_ENV['JWT_LIFETIME']         //< Expire au bout de 5 minutes (5*60 secondes)
             ];
 
             /**
@@ -67,7 +66,7 @@ class AuthCtrl
              * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
              * for a list of spec-compliant algorithms.
              */
-            $jwt = JWT::encode($payload, $key, 'HS256');
+            $jwt = JWT::encode($payload, $_ENV['JWT_KEY'], $_ENV['JWT_ALGORITHM']);
 
             echo $this->jsonSuccessResponse([
                 'token' => $jwt

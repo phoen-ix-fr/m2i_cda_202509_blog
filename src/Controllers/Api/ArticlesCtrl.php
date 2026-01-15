@@ -2,6 +2,8 @@
 
 namespace M2i\Blog\Controllers\Api;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use M2i\Blog\Entities\Article;
 use M2i\Blog\Models\ArticleModel;
 
@@ -44,9 +46,16 @@ class ArticlesCtrl extends MotherCtrl
      */
     protected function create()
     {
-        // @TODO La création se fait toujours sur l'utilisateur ID = 1 (pour les tests)
-        $intCreatorId   = 1;
+        // Récupération de l'utilisageur à partir de l'entête d'authentification (jeton)
+        $objUser = $this->getBearerToken();
 
+        // Vérifie si il y a un jeton
+        if(!$objUser) {
+            echo $this->jsonErrorResponse(403, "Vous devez être connecté·e");
+            exit;
+        }
+
+        $intCreatorId   = $objUser['user_id'];
         
         $strCreateDate  = date('Y-m-d H:i:s');
         $strImage       = "";

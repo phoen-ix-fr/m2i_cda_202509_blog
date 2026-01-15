@@ -2,12 +2,15 @@
 
 namespace M2i\Blog\Controllers\Api;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 use M2i\Blog\Models\UserModel;
 use M2i\Blog\Traits\CanResponse;
 use M2i\Blog\Traits\Requestable;
 
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use OpenApi\Attributes as OA;
+
 
 /**
  * Contrôleur API de gestion de la connexion utilisateur
@@ -26,6 +29,8 @@ class AuthCtrl
      * Envoi les information d'inscription dans le corps de la requête en format JSON
      * { firstname: XX, lastname: XX, email: XX, password: XX }
      */
+    #[OA\Get(path: '/auth/register', operationId: 'getData')]
+    #[OA\Response(response: '200', description: 'Inscription effectuée')]
     public function register()
     {
 
@@ -38,6 +43,8 @@ class AuthCtrl
      * Envoi les informations de connexion dans le corps de la requête en format JSON
      * { email: XX, password: XX }
      */
+    #[OA\Get(path: '/auth/login', operationId: 'getData')]
+    #[OA\Response(response: '200', description: 'Utilisateur connectée')]
     public function login()
     {
         $arrData = $this->getInput();

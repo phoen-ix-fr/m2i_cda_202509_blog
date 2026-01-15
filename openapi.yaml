@@ -1,0 +1,18 @@
+openapi: 3.0.0
+paths:
+  /auth/register:
+    get:
+      summary: 'POST /auth/register'
+      description: "Permet l'inscription de l'utilisateur sur le blog en mode API\nEnvoi les information d'inscription dans le corps de la requête en format JSON\n{ firstname: XX, lastname: XX, email: XX, password: XX }"
+      operationId: getData
+      responses:
+        '200':
+          description: 'Inscription effectuée'
+  /auth/login:
+    get:
+      summary: 'POST /auth/login'
+      description: "Permet à l'utilisateur de se connecter\nEnvoi les informations de connexion dans le corps de la requête en format JSON\n{ email: XX, password: XX }"
+      operationId: getData
+      responses:
+        '200':
+          description: 'Utilisateur connectée'

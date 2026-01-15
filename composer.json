@@ -12,6 +12,7 @@
         "phpmailer/phpmailer": "^7.0",
         "smarty/smarty": "^5.7",
         "firebase/php-jwt": "^7.0",
-        "monolog/monolog": "^3.10"
+        "monolog/monolog": "^3.10",
+        "zircote/swagger-php": "^6.0"
     }
 }

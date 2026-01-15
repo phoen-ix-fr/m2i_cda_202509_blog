@@ -23,6 +23,7 @@ class ArticlesCtrl extends MotherCtrl {
      * @return void
      */
     public function home(){
+
         // Création des variables d'affichage
         $this->_arrData['strTitle']		= "Accueil";
         $this->_arrData['strH1']		= "Accueil";

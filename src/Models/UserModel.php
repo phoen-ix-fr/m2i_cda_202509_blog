@@ -26,23 +26,37 @@ use PDO;
         /**
          * Recherche d'un utilisateur par son mail et son mot de passe
          * @param string $strMail Mail de l'utilisateur
-         * @param string $strPwd Mot de passe
+         * @param string $strPwd Mot de passe en clair
          * @return mixed Tableau de l'utilisateur ou false si non trouvé
          */
 		function getUserByMailAndPwd(string $strMail, string $strPwd) : array|bool{
 			// Récupérer l'utilisateur
-			$strQuery	= "SELECT user_id, user_name, user_firstname
+			$strQuery	= "SELECT user_id, user_name, user_firstname, user_pwd
 							FROM users
 							WHERE user_mail = :mail
-								AND user_pwd = :pwd
 							";
 							
 			$rqPrepare	= $this->_db->prepare($strQuery);
 			$rqPrepare->bindValue(":mail", $strMail, PDO::PARAM_STR);
-			$rqPrepare->bindValue(":pwd", $strPwd, PDO::PARAM_STR);
 			
 			$rqPrepare->execute();
-			return $rqPrepare->fetch();
+			$arrUser = $rqPrepare->fetch();
+
+			if(!$arrUser) { return false; }
+
+			// Vérification du mot de passe
+			if(password_verify($strPwd, $arrUser['user_pwd']))
+			{
+				// On retire du tableau association des données de l'utilisateur
+				// Le Hash du mot de passe (pour des raisons de sécurité)
+				unset($arrUser['user_pwd']);
+
+				return $arrUser;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
         /**

@@ -43,10 +43,13 @@ use PHPMailer\PHPMailer\Exception;
 
                 // Si pas d'erreur => vérification de l'utilisateur en BDD
                 if (count($arrError) == 0) {
+
                     $objUserModel = new UserModel();
                     $arrUser = $objUserModel->getUserByMailAndPwd($strMail, $strPwd);
+
                     if ($arrUser === false) { // utilisateur non trouvé !$arrUser
                         $arrError[] = "Erreur de connexion";
+
                     } else { // utilisateur trouvé
                         $_SESSION['user'] = $arrUser;
                         header("Location:index.php");
@@ -74,6 +77,7 @@ use PHPMailer\PHPMailer\Exception;
             unset($_SESSION['user']);
 
             $_SESSION['message'] = "Vous êtes déconnecté";
+
             header("Location:index.php");
             exit;
         }
@@ -128,13 +132,6 @@ use PHPMailer\PHPMailer\Exception;
                     $boolInsert = $objUserModel->addUser($objUser);
 
                     if ($boolInsert) {
-
-                        // Si insertion ok
-                        // => Envoyer le mail de demande de confirmation du compte
-                        // A déporter dans un autre fichier pour réutiliser
-                        //require 'libs/PHPMailer/Exception.php';
-                        //require 'libs/PHPMailer/PHPMailer.php';
-                        //require 'libs/PHPMailer/SMTP.php';
 
                         $objMail = new PHPMailer();
                         
